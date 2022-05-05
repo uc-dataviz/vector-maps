@@ -7,9 +7,9 @@ output: html_document
 library(tidyverse)
 library(sf)
 library(colorspace) # for better color palettes
-library(here)       # for specifying directory location
+library(here) # for specifying directory location
 
-theme_set(theme_minimal())  # could choose something better for maps
+theme_set(theme_minimal()) # could choose something better for maps
 ```
 
 ## Import information on median household income in 2020 for Cook County, IL at the tract-level using the ACS
@@ -40,13 +40,17 @@ ggplot(data = cook_inc) +
 # fully labeled
 ggplot(data = cook_inc) +
   geom_sf(mapping = aes(fill = estimate, color = estimate)) +
-  scale_fill_continuous_sequential(palette = "viridis",
-                                   rev = FALSE,
-                                   aesthetics = c("fill", "color"),
-                                   labels = scales::label_dollar(),
-                                   name = NULL) +
-  labs(title = "Median household income in 2020",
-       subtitle = "Cook County, by census tract") +
+  scale_fill_continuous_sequential(
+    palette = "viridis",
+    rev = FALSE,
+    aesthetics = c("fill", "color"),
+    labels = scales::label_dollar(),
+    name = NULL
+  ) +
+  labs(
+    title = "Median household income in 2020",
+    subtitle = "Cook County, by census tract"
+  ) +
   ggthemes::theme_map()
 ```
 
@@ -78,13 +82,23 @@ cook_inc %>%
 # default breaks
 ggplot(data = cook_inc) +
   geom_sf(mapping = aes(fill = estimate, color = estimate)) +
-  scale_fill_binned_sequential(palette = "viridis", rev = FALSE, aesthetics = c("fill", "color"))
+  scale_fill_binned_sequential(
+    palette = "viridis",
+    rev = FALSE,
+    aesthetics = c("fill", "color"),
+    labels = scales::label_dollar()
+  )
 
 # quartiles
 ggplot(data = cook_inc) +
   geom_sf(mapping = aes(fill = estimate, color = estimate)) +
-  scale_fill_binned_sequential(palette = "viridis", rev = FALSE, aesthetics = c("fill", "color"),
-                               n.breaks = 4, nice.breaks = FALSE)
+  scale_fill_binned_sequential(
+    palette = "viridis",
+    rev = FALSE,
+    aesthetics = c("fill", "color"),
+    n.breaks = 4, nice.breaks = FALSE,
+    labels = scales::label_dollar()
+  )
 ```
 
 ## Draw a choropleth of median household income for each US county
@@ -99,7 +113,12 @@ usa_inc
 ```{r}
 ggplot(data = usa_inc) +
   geom_sf(mapping = aes(fill = estimate, color = estimate)) +
-  scale_fill_continuous_sequential(palette = "viridis", rev = FALSE, aesthetics = c("fill", "color")) +
+  scale_fill_continuous_sequential(
+    palette = "viridis",
+    rev = FALSE,
+    aesthetics = c("fill", "color"),
+    labels = scales::label_dollar()
+  ) +
   coord_sf(crs = 2163)
 ```
 
